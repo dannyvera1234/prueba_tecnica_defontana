@@ -1,0 +1,100 @@
+@if (isConfigOpen()) {
+<div class="fixed inset-0 bg-black opacity-50 z-40 transition-opacity"></div>
+<div #panelContainer
+  class="fixed top-0 right-0 w-full sm:w-[400px] md:w-[500px] lg:w-[400px] h-full bg-white font-sans z-50 shadow-lg transition-transform duration-300"
+  [ngClass]="{
+      'translate-x-0': isConfigOpen(),
+      'translate-x-full': !isConfigOpen()
+    }">
+  <div class="flex flex-col h-full">
+
+    <div class="flex justify-between items-center p-4 md:p-6 border-b">
+      <h2 class="text-xl md:text-2xl font-bold text-gray-800">Detalles del Personaje</h2>
+      <button (click)="closeConfigPanel()" class="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition">
+        <i class="iconify" data-icon="mdi:close"></i>
+      </button>
+    </div>
+    @if (!loading()) {
+    <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
+      @if (character();as character) {
+      <div class="w-full max-w-2xl mx-auto space-y-5">
+        <!-- Imagen -->
+        <div class="flex justify-center">
+          <img [src]="character.image" alt="Personaje" class="w-40 h-40 rounded-lg object-cover border-4  shadow-md" />
+        </div>
+
+        <!-- Información del personaje -->
+        <div class="flex flex-col gap-6 text-gray-800 text-center">
+          <h2 class="text-3xl font-extrabold">{{ character.name }}</h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="flex flex-col">
+              <span class="text-sm text-gray-500">Especie</span>
+              <span class="font-semibold">{{ character.species }}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="text-sm text-gray-500">Estado</span>
+              <span class="font-semibold">{{ character.status }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información de Localización -->
+        <div class="flex flex-col gap-4 text-gray-800">
+          <h3 class="text-xl font-bold text-center">Información de la Localización</h3>
+          @if (!character.location) {
+          <div class="text-gray-500">No hay información de localización disponible</div>
+          } @else {
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-center">
+            <div>
+              <span class="block text-gray-500">Nombre</span>
+              <span class="font-semibold">{{ character.location.name }}</span>
+            </div>
+            <div>
+              <span class="block text-gray-500">Tipo</span>
+              <span class="font-semibold">{{ character.location.type }}</span>
+            </div>
+            <div>
+              <span class="block text-gray-500">Dimensión</span>
+              <span class="font-semibold">{{ character.location.dimension }}</span>
+            </div>
+          </div>
+          }
+        </div>
+
+        <!-- Primer Episodio -->
+        <div class="flex flex-col gap-4 text-gray-800">
+          <h3 class="text-xl font-bold text-center">Información de episodio</h3>
+          @if (!character.episode) {
+          <div class="text-gray-500">No hay información de episodio disponible</div>
+          } @else {
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-center">
+            <div>
+              <span class="block text-gray-500">Nombre</span>
+              <span class="font-semibold">{{ character.episode.name }}</span>
+            </div>
+            <div>
+              <span class="block text-gray-500">Episodio</span>
+              <span class="font-semibold">{{ character.episode.episode }}</span>
+            </div>
+            <div>
+              <span class="block text-gray-500">Fecha</span>
+              <span class="font-semibold">{{ character.episode.air_date }}</span>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+      }
+    </div>
+    } @else {
+    <div>
+      <div class="text-center py-9">
+        <div class="loader"></div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+}

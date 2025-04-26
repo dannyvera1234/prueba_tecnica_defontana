@@ -1,0 +1,42 @@
+@if (showToggle && isMobile) {
+<div class="fixed inset-0 bg-black  opacity-50  z-30 transition-opacity" (click)="showToggle = false">
+</div>
+}
+
+<div class="fixed left-0 top-0 h-full bg-white flex flex-col font-sans transition-all duration-300 z-40" [ngClass]="{
+      'w-64': showToggle,
+      'w-18': !showToggle,
+      'translate-x-0': showToggle,
+      '-translate-x-full': !showToggle,
+      'md:translate-x-0': true
+    }">
+
+  <div class="px-4 py-5 border-b flex items-center">
+    @if (showToggle) {
+    <h1 class="text-xl font-bold text-gray-800 whitespace-nowrap ml-2">defontana</h1>
+    }
+  </div>
+
+  <div class="flex-1 overflow-y-auto px-4 py-4 custom-scrollbar">
+    @for (item of menuRoutes; track $index) {
+    <div class="mb-5">
+
+      <ul class="space-y-1  text-gray-800">
+        <li class="relative group">
+          <a class="flex items-center px-2 py-2 text-sm font-medium rounded transition-colors cursor-pointer"
+            [routerLink]="item.path" routerLinkActive="active bg-sky-50">
+            <i class="iconify text-xl flex-shrink-0 w-5 h-5" [attr.data-icon]="item.data!['icon']"></i>
+            @if (showToggle) {
+            <span class="ml-2">{{ item.data!['title']}}</span>
+            <span routerLinkActive="active bg-sky-600" class="ml-auto w-1 h-6 rounded-full"></span>
+            }
+
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+    }
+  </div>
+</div>

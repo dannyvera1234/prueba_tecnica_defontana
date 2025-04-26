@@ -1,0 +1,84 @@
+<hr class="my-4" />
+<section class="flex-1 overflow-x-auto">
+  <table class="w-full text-left">
+    <thead>
+
+      <tr class="*:font-normal text-sm *:text-neutral-400 *:px-2 *:py-2">
+        @for (item of heards; track $index) {
+        <th scope="col"> {{item.label}}</th>
+        }
+      </tr>
+    </thead>
+    @if (loading) {
+    <tbody>
+      <tr>
+        <td colspan="7">
+          <div class="text-center py-9">
+            <div class="loader"></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    } @else {
+    @if (data && data!.results.length > 0) {
+    <tbody>
+      @for (character of data.results; track $index) {
+      <tr
+        class="text-sm bg-white border-b border-dashed border-neutral-200 *:px-2 *:py-2 *:whitespace-nowrap [&>th]:ps-0">
+
+        <td class="text-center">
+          <span (click)="markAsFavorite(character)" class="cursor-pointer text-xl" [ngClass]="{
+              'text-yellow-500': favoriteCharacter()?.id === character.id,
+              'text-gray-400': favoriteCharacter()?.id !== character.id
+            }">
+            {{ favoriteCharacter()?.id === character.id ? '★' : '☆' }}
+          </span>
+        </td>
+        <td>
+          <a>
+            <div class="flex gap-3 items-center">
+              <div class="size-10 bg-primary rounded-lg text-white flex items-center justify-center uppercase">
+                {{ character.name | initials }}
+              </div>
+              <div>
+                <p>{{ character.name }}</p>
+              </div>
+            </div>
+          </a>
+        </td>
+        <td>{{ character.status }}</td>
+        <td>
+          <span class="px-2 py-1 rounded-full text-xs font-medium" [ngClass]="{
+              'bg-green-100 text-green-700': character.status === 'Alive',
+              'bg-red-100 text-red-700': character.status === 'Dead',
+              'bg-gray-100 text-gray-700': character.status !== 'Alive' && character.status !== 'Dead'
+            }">
+            {{ character.species }}
+          </span>
+        </td>
+
+        <td>{{ character.type }}</td>
+        <td>{{ character.gender }}</td>
+        <td>{{ character.created | formatDateTime }}</td>
+
+        <td>
+          <button class="btn btn-sm btn-info" (click)="openDetailsPanel(character.id)">Ver</button>
+        </td>
+      </tr>
+
+      }
+    </tbody>
+    } @else {
+    @defer {
+    <tbody>
+      <tr>
+        <td colspan="7">
+          <app-not-found />
+        </td>
+      </tr>
+    </tbody>
+    }
+    }
+    }
+  </table>
+</section>
