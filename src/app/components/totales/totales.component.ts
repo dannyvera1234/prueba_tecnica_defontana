@@ -8,6 +8,6 @@ import { Component, Input } from '@angular/core';
     styles: ``
 })
 export class TotalesComponent {
-  @Input({ required: true }) speciesCount:Record<string, number> = {};
-  @Input({ required: true }) typeCount:Record<string, number> = {};
+  @Input({ required: true }) speciesCount!:Record<string, number>;
+  @Input({ required: true }) typeCount!:Record<string, number>;
 }

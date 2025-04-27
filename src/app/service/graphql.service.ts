@@ -6,14 +6,19 @@ import { map, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GraphqlService {
-
+  constructor(private http: HttpClient) { }
   private readonly graphqlUrl = 'https://rickandmortyapi.com/graphql';
 
-  constructor(private http: HttpClient) { }
-  getCharacters(filters: { name?: string; species?: string; status?: string } = {}): Observable<{ characters: { results: any[] } }> {
+  getCharacters(filters: { name?: string; species?: string; status?: string; page?: number } = {}): Observable<{ characters: { results: any[] } }> {
     const query = `
-      query ($name: String, $species: String, $status: String) {
-        characters(filter: { name: $name, species: $species, status: $status }) {
+      query ($name: String, $species: String, $status: String, $page: Int) {
+        characters(filter: { name: $name, species: $species, status: $status }, page: $page) {
+          info {
+            count
+            pages
+            next
+            prev
+          }
           results {
             id
             name
@@ -38,11 +43,17 @@ export class GraphqlService {
       }
     `;
 
-    const variables = {
+    // Preparamos las variables de la consulta
+    const variables: any = {
       name: filters.name || null,
       status: filters.status || null,
       species: filters.species || null
     };
+
+    // Solo incluimos el parámetro page si está definido en los filtros
+    if (filters.page) {
+      variables.page = filters.page;
+    }
 
     return this.http.post<any>(this.graphqlUrl, { query, variables }).pipe(
       map(response => response.data?.characters ? { characters: response.data.characters } : { characters: { results: [] } })
@@ -71,6 +82,8 @@ export class GraphqlService {
           }
           location {
             name
+            dimension
+            type
             residents {
               id
               name
@@ -79,6 +92,8 @@ export class GraphqlService {
           episode {
             id
             name
+            air_date
+            episode
           }
         }
       }
@@ -86,7 +101,16 @@ export class GraphqlService {
 
     const variables = { id };
 
-    return this.http.post<any>(this.graphqlUrl, { query, variables });
+    return this.http.post<any>(this.graphqlUrl, { query, variables }).pipe(
+      map(response => {
+        const character = response.data?.character || null;
+        if (character && Array.isArray(character.episode)) {
+          // Solo dejar el primer episodio
+          character.episode = character.episode[0] || null;
+        }
+        return character;
+      })
+    );
   }
 
 }

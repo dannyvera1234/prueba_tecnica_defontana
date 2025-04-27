@@ -2,7 +2,6 @@
 <section class="flex-1 overflow-x-auto">
   <table class="w-full text-left">
     <thead>
-
       <tr class="*:font-normal text-sm *:text-neutral-400 *:px-2 *:py-2">
         @for (item of heards; track $index) {
         <th scope="col"> {{item.label}}</th>
@@ -81,4 +80,11 @@
     }
     }
   </table>
+
+  @defer () {
+  @if(data && data.info) {
+  <app-pagination [totalItems]="data.info?.count" [currentPage]="data.info?.pages"
+    (pageChange)="pageChange.emit($event)" />
+  }
+  }
 </section>

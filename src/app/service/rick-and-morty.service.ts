@@ -12,7 +12,6 @@ export class RickAndMortyService {
 
   getCharacters(filters: { [param: string]: string | number | boolean }): Observable<any> {
     const params = new HttpParams({ fromObject: filters });
-
     return this.http.get<any>(`${this.apiUrl}/character`, { params });
   }
 

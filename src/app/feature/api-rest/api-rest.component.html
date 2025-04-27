@@ -7,8 +7,8 @@
   <div class="rounded-2xl shadow bg-white p-6 flex flex-col gap-6 flex-1">
     @if (favoriteCharacter()) {
     <div class="flex gap-4 items-center">
-      <div class="size-10 bg-primary rounded-lg text-white flex items-center justify-center uppercase">
-        {{ favoriteCharacter().name | initials }}
+      <div class="size-10 border border-primary rounded-lg flex items-center justify-center overflow-hidden">
+        <img [src]="favoriteCharacter().image" alt="Character" class="object-cover w-full h-full">
       </div>
       <div>
         <p class="text-lg font-bold">Personaje Favorito</p>
@@ -24,7 +24,8 @@
     </div>
     @defer {
     <app-grid-table [heards]="heards" [loading]="loading()" [data]="characters()"
-      (favorite)="favoriteCharacter.set($event)" (openDetails)="isIdOpen.set($event)" />
+      (favorite)="favoriteCharacter.set($event)" (openDetails)="isIdOpen.set($event)"
+      (pageChange)="loadCharacters($event)" />
     }
   </div>
 </div>

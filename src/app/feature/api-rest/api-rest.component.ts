@@ -2,22 +2,20 @@ import { Component, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { finalize, mergeMap, of } from 'rxjs';
 import { RickAndMortyService } from '../../service';
-import { ApiRestDetailsComponent} from './components';
-import {  TextInitialsPipe } from '../../pipe';
+import { ApiRestDetailsComponent } from './components';
 import { FiltersComponent, GridTableComponent, TotalesComponent } from '../../components';
 
 @Component({
-    selector: 'app-api-rest',
-    imports: [
-        ReactiveFormsModule,
-        FiltersComponent,
-        TextInitialsPipe,
-        TotalesComponent,
-        GridTableComponent,
-        ApiRestDetailsComponent,
-    ],
-    templateUrl: './api-rest.component.html',
-    styles: ``
+  selector: 'app-api-rest',
+  imports: [
+    ReactiveFormsModule,
+    FiltersComponent,
+    TotalesComponent,
+    GridTableComponent,
+    ApiRestDetailsComponent,
+  ],
+  templateUrl: './api-rest.component.html',
+  styles: ``
 })
 export class ApiRestComponent {
   public readonly loading = signal(false);
@@ -49,9 +47,7 @@ export class ApiRestComponent {
       finalize(() => this.loading.set(false))
     ).subscribe(
       res => {
-        console.log(res);
         this.characters.set(res);
-
         // Contar las especies
         const speciesCount = res.results.reduce((acc: any, character: any) => {
           const species = character.species || 'Desconocido';
@@ -69,9 +65,6 @@ export class ApiRestComponent {
         // Actualizar los contadores en alguna propiedad (si es necesario)
         this.speciesCount.set(speciesCount);
         this.typeCount.set(typeCount);
-
-        console.log('Especies:', speciesCount);
-        console.log('Tipos:', typeCount);
       },
     );
   }

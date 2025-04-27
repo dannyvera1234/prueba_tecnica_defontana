@@ -16,10 +16,14 @@ export class GraphplDetailsComponent {
       this.graphqlStore.isOpenDetails(null);
     }
   }
-  graphqlStore = inject(GRAPHPL_STORE);
+
+  public graphqlStore = inject(GRAPHPL_STORE);
+
+
+  constructor() {}
+
 
   closeConfigPanel() {
     this.graphqlStore.isOpenDetails(null);
   }
-
 }

@@ -1,35 +1,32 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { GraphqlService } from '../../../service';
-import { of } from 'rxjs';
-import { finalize, mergeMap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { inject } from '@angular/core';
 
 export interface GraphplStoreState {
   graphpl: {
-    characters: null | any;
-    // favoriteCharacter: null | any;
-    // isIdOpen: null | any;
-    // speciesCount: Record<string, number>;
-    // typeCount: Record<string, number>;
+    info: any | null;
+    results: any | null;
+    speciesCount: Record<string, number>;
+    typeCount: Record<string, number>;
   };
   loading: boolean;
-  graphplError: null | string;
-  graphplSuccess: null | string;
-  isIdOpen: null | any;
+  isIdOpen: null | number;
+  dataDetails: null | any;
+  loadingDetails: boolean;
 }
 
 const initialGraphplStoreState: GraphplStoreState = {
   graphpl: {
-    characters: null,
-    // favoriteCharacter: null,
-    // isIdOpen: null,
-    // speciesCount: {},
-    // typeCount: {},
+    info: {},
+    results: [],
+    speciesCount: {},
+    typeCount: {}
   },
   loading: false,
-  graphplError: null,
-  graphplSuccess: null,
   isIdOpen: null,
+  dataDetails: null,
+  loadingDetails: false,
 };
 
 export const GRAPHPL_STORE = signalStore(
@@ -40,26 +37,51 @@ export const GRAPHPL_STORE = signalStore(
 
     return {
       isOpenDetails(id: any) {
-        console.log('isOpenDetails', id);
-
         patchState(store, { isIdOpen: id });
+        if (id == null) return;
+        this.getCharacter(id);
       },
 
       loadCharacters(filters: any = {}) {
-        console.log('loadCharacters', filters);
+        console.log('filters', filters);
         patchState(store, { loading: true });
         service.getCharacters(filters).pipe(
           finalize(() => patchState(store, { loading: false }))
         ).subscribe((response) => {
-          console.log('response', response.characters);
+          console.log('response', response);
+          // Contar las especies
+          const speciesCount = response.characters.results.reduce((acc: Record<string, number>, character: any) => {
+            const species = character.species || 'Desconocido';
+            acc[species] = (acc[species] || 0) + 1;
+            return acc;
+          }, {});
+
+          // Contar los tipos
+          const typeCount = response.characters.results.reduce((acc: Record<string, number>, character: any) => {
+            const type = character.type || 'Sin tipo';
+            acc[type] = (acc[type] || 0) + 1;
+            return acc;
+          }, {});
+
           patchState(store, {
             graphpl: {
               ...store.graphpl,
-              characters: response.characters
+              ...response.characters,
+              speciesCount: speciesCount,
+              typeCount: typeCount,
             }
           });
         });
-      }
+      },
+
+      getCharacter(id: number) {
+        patchState(store, { loadingDetails: true });
+        service.getCharacter(id).pipe(
+          finalize(() => patchState(store, { loadingDetails: false }))
+        ).subscribe((response) => {
+          patchState(store, { dataDetails: response });
+        });
+      },
     };
   })
 );

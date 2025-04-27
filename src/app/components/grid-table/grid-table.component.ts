@@ -2,11 +2,12 @@ import { NgClass } from '@angular/common';
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
 import { FormatDateTimePipe, TextInitialsPipe } from '../../pipe';
 import { NotFoundComponent } from '../not-found';
+import { PaginationComponent } from '../pagination';
 
 @Component({
     selector: 'app-grid-table',
     templateUrl: './grid-table.component.html',
-    imports: [NgClass, TextInitialsPipe, FormatDateTimePipe, NotFoundComponent]
+    imports: [NgClass, TextInitialsPipe, FormatDateTimePipe, NotFoundComponent,PaginationComponent],
 })
 export class GridTableComponent {
   @Input({ required: true }) heards!: { key: string; label: string }[];
@@ -14,6 +15,7 @@ export class GridTableComponent {
   @Input({ required: true }) loading: boolean = false;
   @Output() public readonly favorite = new EventEmitter<any>();
   @Output() public readonly openDetails = new EventEmitter<number>();
+  @Output() public readonly pageChange = new EventEmitter<number>();
 
   public readonly favoriteCharacter = signal<any | null>(null);
 

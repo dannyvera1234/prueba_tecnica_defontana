@@ -1,12 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { FiltersComponent, GridTableComponent } from '../../components';
+import { FiltersComponent, GridTableComponent, TotalesComponent } from '../../components';
 import { GRAPHPL_STORE } from './store/graphpl.store';
-import { TextInitialsPipe } from '../../pipe';
 import { GraphplDetailsComponent } from './components';
 
 @Component({
   selector: 'app-graphpl',
-  imports: [GridTableComponent, FiltersComponent, TextInitialsPipe, GraphplDetailsComponent],
+  imports: [GridTableComponent, FiltersComponent, GraphplDetailsComponent,TotalesComponent],
   templateUrl: './graphpl.component.html',
   styles: ``
 })
@@ -24,7 +23,6 @@ export class GraphplComponent {
 
   public readonly favoriteCharacter = signal<any | null>(null);
   graphqlStore = inject(GRAPHPL_STORE);
-  // public readonly isIdOpen = signal<any | null>(null);
 
 
   constructor() {
