@@ -4,11 +4,10 @@ import { routes } from '../../app.routes';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [NgClass, RouterLink, RouterLinkActive],
-  templateUrl: './sidebar.component.html',
-  styles: [`
+    selector: 'app-sidebar',
+    imports: [NgClass, RouterLink, RouterLinkActive],
+    templateUrl: './sidebar.component.html',
+    styles: [`
 
     .custom-scrollbar::-webkit-scrollbar {
       width: 3px; /* Hace la barra más delgada */

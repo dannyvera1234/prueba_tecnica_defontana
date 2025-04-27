@@ -7,18 +7,17 @@ import {  TextInitialsPipe } from '../../pipe';
 import { FiltersComponent, GridTableComponent, TotalesComponent } from '../../components';
 
 @Component({
-  selector: 'app-api-rest',
-  standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FiltersComponent,
-    TextInitialsPipe,
-    TotalesComponent,
-    GridTableComponent,
-    ApiRestDetailsComponent,
-  ],
-  templateUrl: './api-rest.component.html',
-  styles: ``
+    selector: 'app-api-rest',
+    imports: [
+        ReactiveFormsModule,
+        FiltersComponent,
+        TextInitialsPipe,
+        TotalesComponent,
+        GridTableComponent,
+        ApiRestDetailsComponent,
+    ],
+    templateUrl: './api-rest.component.html',
+    styles: ``
 })
 export class ApiRestComponent {
   public readonly loading = signal(false);

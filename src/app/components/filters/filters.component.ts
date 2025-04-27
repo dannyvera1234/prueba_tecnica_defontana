@@ -3,11 +3,10 @@ import { Component, ElementRef, EventEmitter, HostListener, Output, signal } fro
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-filters',
-  standalone: true,
-  imports: [ReactiveFormsModule, NgClass, NgOptimizedImage],
-  templateUrl: './filters.component.html',
-  styles: ``
+    selector: 'app-filters',
+    imports: [ReactiveFormsModule, NgClass, NgOptimizedImage],
+    templateUrl: './filters.component.html',
+    styles: ``
 })
 export class FiltersComponent {
  @HostListener('document:click', ['$event.target'])

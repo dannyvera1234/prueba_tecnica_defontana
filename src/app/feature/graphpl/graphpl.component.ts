@@ -1,17 +1,16 @@
-import { Component, signal } from '@angular/core';
-import { GraphqlService } from '../../service';
+import { Component, inject, signal } from '@angular/core';
 import { FiltersComponent, GridTableComponent } from '../../components';
+import { GRAPHPL_STORE } from './store/graphpl.store';
+import { TextInitialsPipe } from '../../pipe';
+import { GraphplDetailsComponent } from './components';
 
 @Component({
   selector: 'app-graphpl',
-  standalone: true,
-  imports: [GridTableComponent,FiltersComponent],
+  imports: [GridTableComponent, FiltersComponent, TextInitialsPipe, GraphplDetailsComponent],
   templateUrl: './graphpl.component.html',
   styles: ``
 })
 export class GraphplComponent {
-  public readonly loading = signal(false);
-  public readonly characters = signal<null | any>(null);
   public readonly heards = [
     { key: 'fav', label: 'Favorite' },
     { key: 'name', label: 'Name' },
@@ -24,20 +23,11 @@ export class GraphplComponent {
   ];
 
   public readonly favoriteCharacter = signal<any | null>(null);
-  public readonly isIdOpen = signal<any | null>(null);
+  graphqlStore = inject(GRAPHPL_STORE);
+  // public readonly isIdOpen = signal<any | null>(null);
 
-  constructor(private graphqlService: GraphqlService) {
-    // Example usage of the GraphqlService to fetch characters
-    this.loadCharacters();
+
+  constructor() {
+    this.graphqlStore.loadCharacters();
   }
-
-
-
-  loadCharacters(filters: { name?: string; status?: string } = {}) {
-    this.graphqlService.getCharacters(filters).subscribe(data => {
-      console.log(data);
-    });
-  }
-
-
 }

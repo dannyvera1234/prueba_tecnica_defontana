@@ -3,11 +3,10 @@ import { Component, ElementRef, EventEmitter, HostListener, Output, output, sign
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-api-rest-filtrs',
-  standalone: true,
-  imports: [ReactiveFormsModule, NgClass, NgOptimizedImage],
-  templateUrl: './api-rest-filtrs.component.html',
-  styles: ``
+    selector: 'app-api-rest-filtrs',
+    imports: [ReactiveFormsModule, NgClass, NgOptimizedImage],
+    templateUrl: './api-rest-filtrs.component.html',
+    styles: ``
 })
 export class ApiRestFiltrsComponent {
   @HostListener('document:click', ['$event.target'])

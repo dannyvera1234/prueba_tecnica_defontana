@@ -4,11 +4,10 @@ import { RickAndMortyService } from '../../../../service';
 import { finalize, forkJoin, of, switchMap, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-api-rest-details',
-  standalone: true,
-  imports: [NgClass],
-  templateUrl: './api-rest-details.component.html',
-  styles: ``
+    selector: 'app-api-rest-details',
+    imports: [NgClass],
+    templateUrl: './api-rest-details.component.html',
+    styles: ``
 })
 export class ApiRestDetailsComponent {
   @ViewChild('panelContainer') menuContainer!: ElementRef;

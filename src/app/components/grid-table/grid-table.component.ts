@@ -4,10 +4,9 @@ import { FormatDateTimePipe, TextInitialsPipe } from '../../pipe';
 import { NotFoundComponent } from '../not-found';
 
 @Component({
-  selector: 'app-grid-table',
-  templateUrl: './grid-table.component.html',
-  standalone: true,
-  imports: [NgClass, TextInitialsPipe, FormatDateTimePipe, NotFoundComponent],
+    selector: 'app-grid-table',
+    templateUrl: './grid-table.component.html',
+    imports: [NgClass, TextInitialsPipe, FormatDateTimePipe, NotFoundComponent]
 })
 export class GridTableComponent {
   @Input({ required: true }) heards!: { key: string; label: string }[];

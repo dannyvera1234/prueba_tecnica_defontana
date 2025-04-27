@@ -5,11 +5,10 @@ import { HeaderComponent } from './header';
 import { SidebarComponent } from './sidebar';
 
 @Component({
-  selector: 'app-layouts',
-  standalone: true,
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent, NgClass],
-  templateUrl: './layouts.component.html',
-  styles: ``
+    selector: 'app-layouts',
+    imports: [RouterOutlet, HeaderComponent, SidebarComponent, NgClass],
+    templateUrl: './layouts.component.html',
+    styles: ``
 })
 export class LayoutsComponent {
   @ViewChild('leftsidenav') sidenav!: ElementRef;
