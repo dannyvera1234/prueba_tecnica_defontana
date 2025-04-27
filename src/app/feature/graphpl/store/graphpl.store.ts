@@ -43,12 +43,10 @@ export const GRAPHPL_STORE = signalStore(
       },
 
       loadCharacters(filters: any = {}) {
-        console.log('filters', filters);
         patchState(store, { loading: true });
         service.getCharacters(filters).pipe(
           finalize(() => patchState(store, { loading: false }))
         ).subscribe((response) => {
-          console.log('response', response);
           // Contar las especies
           const speciesCount = response.characters.results.reduce((acc: Record<string, number>, character: any) => {
             const species = character.species || 'Desconocido';
