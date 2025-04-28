@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ApiResponse } from '../interface/characters.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class RickAndMortyService {
 
   constructor(private http: HttpClient) { }
 
-  getCharacters(filters: { [param: string]: string | number | boolean }): Observable<any> {
+  getCharacters(filters: { [param: string]: string | number | boolean }): Observable<ApiResponse> {
     const params = new HttpParams({ fromObject: filters });
     return this.http.get<any>(`${this.apiUrl}/character`, { params });
   }

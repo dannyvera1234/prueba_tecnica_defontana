@@ -4,6 +4,7 @@ import { finalize, mergeMap, of } from 'rxjs';
 import { RickAndMortyService } from '../../service';
 import { ApiRestDetailsComponent } from './components';
 import { FiltersComponent, GridTableComponent, TotalesComponent } from '../../components';
+import { ApiResponse } from '../../interface/characters.interface';
 
 @Component({
   selector: 'app-api-rest',
@@ -19,7 +20,7 @@ import { FiltersComponent, GridTableComponent, TotalesComponent } from '../../co
 })
 export class ApiRestComponent {
   public readonly loading = signal(false);
-  public readonly characters = signal<null | any>(null);
+  public readonly characters = signal<null | ApiResponse>(null);
   public readonly favoriteCharacter = signal<any | null>(null);
   public readonly isIdOpen = signal<any | null>(null);
   public readonly speciesCount = signal<Record<string, number>>({});
@@ -47,6 +48,7 @@ export class ApiRestComponent {
       finalize(() => this.loading.set(false))
     ).subscribe(
       res => {
+        console.log(res)
         this.characters.set(res);
         // Contar las especies
         const speciesCount = res.results.reduce((acc: any, character: any) => {

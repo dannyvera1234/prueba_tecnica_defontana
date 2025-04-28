@@ -5,16 +5,17 @@
   </div>
 
   <!-- Controles de Paginación -->
-  <div class="flex gap-4 cursor-pointer items-center justify-center">
+  <div class="flex gap-4 items-center justify-center flex-wrap">
     <!-- Botón de Anterior -->
-    <a (click)="onPrev()" [class.cursor-not-allowed]="currentPage === 1" class="p-2 ">
+    <a (click)="onPrev()" [class.cursor-not-allowed]="currentPage === 1"
+      class="p-2 text-lg hover:bg-gray-200 rounded-md transition-all">
       ⬅️
     </a>
 
     <!-- Páginas Numeradas -->
     @for (page of pageNumbers; track $index) {
 
-    <div>
+    <div class="flex items-center">
       <a (click)="onPageSelect(page)" [ngClass]="{
            'bg-blue-600 text-white': page === currentPage,
            'hover:bg-blue-500': page !== currentPage
@@ -25,7 +26,8 @@
     }
 
     <!-- Botón de Siguiente -->
-    <a (click)="onNext()" [class.cursor-not-allowed]="currentPage === totalPages()" class="p-2">
+    <a (click)="onNext()" [class.cursor-not-allowed]="currentPage === totalPages()"
+      class="p-2 text-lg hover:bg-gray-200 rounded-md transition-all">
       ➡️
     </a>
   </div>
